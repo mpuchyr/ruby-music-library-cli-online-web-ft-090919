@@ -27,6 +27,7 @@ class MusicLibraryController
     songs.each_with_index do |song, index|
       puts "#{index + 1}. #{song.artist.name} - #{song.name} - #{song.genre.name}"
     end
+    songs
   end
 
   def list_artists
@@ -35,6 +36,7 @@ class MusicLibraryController
     artists.each_with_index do |artist, index|
       puts "#{index + 1}. #{artist.name}"
     end
+    artists
   end
 
   def list_genres
@@ -43,10 +45,54 @@ class MusicLibraryController
     genres.each_with_index do |genre, index|
       puts "#{index + 1}. #{genre.name}"
     end
+    genres
   end
 
   def list_songs_by_artist
     puts "Please enter the name of an artist:"
+    user_artist = gets.chomp
+    artist_songs = []
+    Song.all.uniq.each do |song|
+      if song.artist.name == user_artist
+        artist_songs << song
+      end
+    end
+
+    artist_songs.sort! {|a,b| a.name <=> b.name}
+    artist_songs.each_with_index do |song, index|
+      puts "#{index + 1}. #{song.name} - #{song.genre.name}"
+    end
+  end
+
+  def list_songs_by_genre
+    puts "Please enter the name of a genre:"
+    user_genre = gets.chomp
+    genre_songs = []
+    Song.all.uniq.each do |song|
+      if song.genre.name == user_genre
+        genre_songs << song
+      end
+    end
+
+    genre_songs.sort! {|a,b| a.name <=> b.name}
+    genre_songs.each_with_index do |song, index|
+      puts "#{index + 1}. #{song.artist.name} - #{song.name}"
+    end
+  end
+
+  def play_song
+    puts "Which song number would you like to play?"
+    user_song = gets.chomp.to_i
+    songs = Song.all.uniq
+    songs.sort! {|a,b| a.name <=> b.name}
+    if user_song >= 1 && user_song <= songs.length
+      if songs[user_song - 1]  
+        song_artist = songs[user_song - 1].artist.name
+        song_name = songs[user_song - 1].name
+        puts "Playing #{song_name} by #{song_artist}"
+      end
+    end
+    
   end
 
 
