@@ -18,6 +18,20 @@ class MusicLibraryController
     puts "What would you like to do?"
     while user_input != 'exit' do
       user_input = gets.chomp
+      case user_input
+      when "list songs"
+        list_songs
+      when "list artists"
+        list_artists
+      when "list genres"
+        list_genres
+      when "list artist"
+        list_songs_by_artist
+      when "list genre"
+        list_songs_by_genre
+      when "play song"
+        play_song
+      end
     end
   end
 
@@ -91,9 +105,9 @@ class MusicLibraryController
         song_name = songs[user_song - 1].name
         puts "Playing #{song_name} by #{song_artist}"
       end
-    end
-    
+    end  
   end
 
-
 end
+
+
