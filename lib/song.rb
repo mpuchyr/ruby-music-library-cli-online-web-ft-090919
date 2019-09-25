@@ -56,5 +56,21 @@ class Song
     song
   end
 
+  def self.new_from_filename(filename)
+    parts = filename.split(/[-.]/)
+    artist_name = parts[0].strip
+    song_name = parts[1].strip
+    song_genre = parts[2].strip
+    song = Song.find_or_create_by_name(song_name)
+    song.artist = Artist.find_or_create_by_name(artist_name)
+    song.genre = Genre.find_or_create_by_name(song_genre)
+    song
+  end
+
+  def self.create_from_filename(filename)
+    song = Song.new_from_filename(filename)
+    song.save
+  end
+
 
 end
