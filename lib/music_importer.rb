@@ -1,25 +1,20 @@
 require 'pry'
 class MusicImporter
-  attr_reader :path
+  attr_accessor :path
 
   def initialize(path)
     @path = path
   end
 
   def files
-    dir_files = Dir.glob(@path + "/*.mp3")
-    files = []
-    dir_files.each do |file|
-      files << file.split("/").last
+    files = Dir.glob(@path + "/*.mp3")
+    music_files = []
+    files.each do |file|
+      music_filess << file.split("/").last.strip
     end
-    files
+    music_files
   end
 
-  def import
-    files.each do |file|
-      Song.create_from_filename(file)
-    end
-  end
 
 
 end
